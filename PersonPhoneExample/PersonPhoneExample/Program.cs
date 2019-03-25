@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PersonPhoneExample.Models;
 using PersonPhoneExample.Repositories;
+using PersonPhoneExample.Views;
 
 namespace PersonPhoneExample
 {
@@ -14,17 +15,9 @@ namespace PersonPhoneExample
         {
             PersonRepository personRepository = new PersonRepository();
 
-            Person newPerson = new Person
-            {
-                Name = "Jack Bauer",
-                Age = 45,
-                Phone = new List<Phone>
-                {
-                    new Phone {Number = "0501235423", Type = "Koti"},
-                    new Phone {Number = "020202", Type = "Työ"}
-                }
-            };
+            UIModel uiModel = new UIModel();
 
+            string msg = "";
             ConsoleKeyInfo cki;
             do
             {
@@ -34,34 +27,40 @@ namespace PersonPhoneExample
                     case ConsoleKey.C:
                         Console.Clear();
                         personRepository.Create(newPerson);
+                        msg = "_________________________________\nPaina Enter jatkaaksesi!";
                         break;
 
                     case ConsoleKey.R:
                         Console.Clear();
                         Console.WriteLine(personRepository.Read(UserInputId()));
+                        msg = "_________________________________\nPaina Enter jatkaaksesi!";
                         break;
 
                     case ConsoleKey.U:
                         Console.Clear();
                         personRepository.Update(UserInputId(), newPerson);
+                        msg = "_________________________________\nPaina Enter jatkaaksesi!";
                         break;
 
                     case ConsoleKey.D:
                         Console.Clear();
                         personRepository.Delete(UserInputId());
+                        msg = "_________________________________\nPaina Enter jatkaaksesi!";
                         break;
 
                     case ConsoleKey.X:
                         Console.Clear();
-                        Console.WriteLine("Ohjelma sulkeutuu, kiitti ku käytit.");
+                        msg = "Ohjelma sulkeutuu, kiitti ku käytit.";
                         break;
 
                     default:
                         Console.Clear();
-                        Console.WriteLine("Väärä syöte");
+                        msg = "Painoit väärää nappulaa - Paina Enter jatkaaksesi!";
                         break;
                 }
-                Console.WriteLine("");
+                Console.WriteLine(msg);
+                Console.ReadKey();
+                Console.Clear();
             } while (cki.Key != ConsoleKey.X);
 
 
@@ -79,8 +78,9 @@ namespace PersonPhoneExample
             return Console.ReadKey();
         }
 
-        private static long UserInputId()
+        public static long UserInputId()
         {
+            Console.WriteLine("Syötä ID:");
             while (true)
             {
                 if (long.TryParse(Console.ReadLine(), out long id))

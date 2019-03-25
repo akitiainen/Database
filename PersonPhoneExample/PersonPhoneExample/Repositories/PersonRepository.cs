@@ -45,8 +45,9 @@ namespace PersonPhoneExample.Repositories
         public Person Read(long id)
         {
             var person = _personContext.
-                Person.
-                FirstOrDefault(p => p.Id == id);
+                Person
+                .Include(p => p.Phone)
+                .FirstOrDefault(p => p.Id == id);
 
             return person;
         }
