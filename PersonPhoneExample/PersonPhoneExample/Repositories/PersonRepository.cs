@@ -16,6 +16,7 @@ namespace PersonPhoneExample.Repositories
         {
             _personContext.Person.Add(person);
             _personContext.SaveChanges();
+            Console.WriteLine("Henkilö lisätty tietokantaan!");
         }
 
         public void Delete(long id)

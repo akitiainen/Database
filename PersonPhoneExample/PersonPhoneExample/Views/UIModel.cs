@@ -43,6 +43,7 @@ namespace PersonPhoneExample.Views
             {
                 new Phone {Number = "0200123456", Type = "Koti"}
             };
+            _personRepository.Update(id, updatePerson);
         }
 
         public void DeletePerson(long id)
