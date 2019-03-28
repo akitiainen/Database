@@ -30,9 +30,13 @@ namespace PersonPhoneExample.Views
 
         public void UpdatePerson()
         {
+            long id;
             Console.WriteLine("Syötä sen henkilön ID, jonka tiedot haluat päivittää:");
-            string id = Console.ReadLine();
-            Person updatePerson = _personRepository.Read(long.Parse(id));
+            while(!long.TryParse(Console.ReadLine(), out id))
+            {
+                Console.WriteLine("ei olluna numero kirjota uusiks");
+            }
+            Person updatePerson = _personRepository.Read(id);
             updatePerson.Name = "Turo";
             updatePerson.Age = 35;
             updatePerson.Phone = new List<Phone>
@@ -55,7 +59,14 @@ namespace PersonPhoneExample.Views
             if (person == null)
                 Console.WriteLine($"Henkilöä numerolla {id} ei löydy!");
             else
-                Console.WriteLine($"{person.Id} {person.Name} {person.Phone}");
+            {
+                Console.Write($"{person.Id} {person.Name} ");
+                foreach (var phone in person.Phone)
+                {
+                    Console.Write($"{phone.Number} ");
+                }
+                Console.WriteLine();
+            }
         }
 
         public void ReadList()
@@ -64,7 +75,12 @@ namespace PersonPhoneExample.Views
 
             foreach (var p in persons)
             {
-                Console.WriteLine($"{p.Id} {p.Name} {p.Phone}");
+                Console.Write($"{p.Id} {p.Name} ");
+                foreach (var phone in p.Phone)
+                {
+                    Console.Write($"{phone.Number} ");
+                }
+                Console.WriteLine();
             }
         }
     }

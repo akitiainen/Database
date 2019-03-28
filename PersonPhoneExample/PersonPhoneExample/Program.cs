@@ -13,8 +13,6 @@ namespace PersonPhoneExample
     {
         static void Main(string[] args)
         {
-            PersonRepository personRepository = new PersonRepository();
-
             UIModel uiModel = new UIModel();
 
             string msg = "";
@@ -26,25 +24,31 @@ namespace PersonPhoneExample
                 {
                     case ConsoleKey.C:
                         Console.Clear();
-                        personRepository.Create(newPerson);
+                        uiModel.CreatePerson();
                         msg = "_________________________________\nPaina Enter jatkaaksesi!";
                         break;
 
                     case ConsoleKey.R:
                         Console.Clear();
-                        Console.WriteLine(personRepository.Read(UserInputId()));
+                        uiModel.ReadById(UserInputId());
+                        msg = "_________________________________\nPaina Enter jatkaaksesi!";
+                        break;
+
+                    case ConsoleKey.E:
+                        Console.Clear();
+                        uiModel.ReadList();
                         msg = "_________________________________\nPaina Enter jatkaaksesi!";
                         break;
 
                     case ConsoleKey.U:
                         Console.Clear();
-                        personRepository.Update(UserInputId(), newPerson);
+                        uiModel.UpdatePerson();
                         msg = "_________________________________\nPaina Enter jatkaaksesi!";
                         break;
 
                     case ConsoleKey.D:
                         Console.Clear();
-                        personRepository.Delete(UserInputId());
+                        uiModel.DeletePerson(UserInputId());
                         msg = "_________________________________\nPaina Enter jatkaaksesi!";
                         break;
 
@@ -71,6 +75,7 @@ namespace PersonPhoneExample
             Console.WriteLine("Tietokantaohjelmointitehtävä 1!\n");
             Console.WriteLine("[C] Lisää tietokantaan uusi tietue");
             Console.WriteLine("[R] Lue tietokannasta tietoja");
+            Console.WriteLine("[E] Tulosta kaikki henkilöt ja numerot");
             Console.WriteLine("[U] Päivitä henkilön tiedot");
             Console.WriteLine("[D] Poista henkilö tietokannasta");
             Console.WriteLine("[X] Lopeta ohjelmansuoritus");
