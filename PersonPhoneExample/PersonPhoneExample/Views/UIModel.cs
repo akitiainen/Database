@@ -31,17 +31,19 @@ namespace PersonPhoneExample.Views
         public void UpdatePerson()
         {
             long id;
-            Console.WriteLine("Syötä sen henkilön ID, jonka tiedot haluat päivittää:");
+            Console.WriteLine("Syötä sen henkilön, jonka tiedot haluat päivittää, ID:");
             while(!long.TryParse(Console.ReadLine(), out id))
             {
-                Console.WriteLine("ei olluna numero kirjota uusiks");
+                Console.WriteLine("ei ollu numero kirjota uusiks");
             }
             Person updatePerson = _personRepository.Read(id);
             updatePerson.Name = "Turo";
             updatePerson.Age = 35;
             updatePerson.Phone = new List<Phone>
             {
-                new Phone {Number = "0200123456", Type = "Koti"}
+                
+                new Phone {Number = "0200123456", Type = "Koti",  },
+                new Phone {Number = "500", Type = "Koti"}
             };
             _personRepository.Update(id, updatePerson);
         }
