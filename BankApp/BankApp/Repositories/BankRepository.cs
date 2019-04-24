@@ -17,20 +17,48 @@ namespace BankApp.Repositories
             _bankdbContext.SaveChanges();
         }
 
-        public void DeleteBank()
+        public void DeleteBank(long id)
         {
-            throw new NotImplementedException();
+            var deletedBank = Read(id);
+            if (deletedBank != null)
+            {
+                _bankdbContext.Bank.Remove(deletedBank);
+                _bankdbContext.SaveChanges();
+                Console.WriteLine("Tiedot poistettu onnistuneesti!");
+            }
+            else
+            {
+                Console.WriteLine("Tiedon poisto EI onnistunut - ID tuntematon");
+            }
         }
 
-        public List<Bank> ReadBank()
+        public Bank Read(long id)
+        {
+            var bank = _bankdbContext.
+                Bank.FirstOrDefault(b => b.Id == id);
+
+            return bank;
+        }
+
+        public List<Bank> ReadBanks()
         {
             var banks = _bankdbContext.Bank.ToList();
             return banks;
         }
 
-        public void UpdateBank()
+        public void UpdateBank(long id, Bank bank)
         {
-            throw new NotImplementedException();
+            var isBankOkay = Read(id);
+            if (isBankOkay != null)
+            {
+                _bankdbContext.Update(bank);
+                _bankdbContext.SaveChanges();
+                Console.WriteLine("Tiedot tallennettu onnistuneesti!");
+            }
+            else
+            {
+                Console.WriteLine("Tietojen tallennus epäonnistui - pankkia ei ole olemassa!");
+            }
         }
     }
 }

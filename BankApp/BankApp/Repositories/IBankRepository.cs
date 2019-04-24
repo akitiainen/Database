@@ -8,8 +8,9 @@ namespace BankApp.Repositories
     public interface IBankRepository
     {
         void CreateBank(Bank bank);
-        List<Bank> ReadBank();
-        void UpdateBank();
-        void DeleteBank();
+        List<Bank> ReadBanks();
+        Bank Read(long id);
+        void UpdateBank(long id, Bank bank);
+        void DeleteBank(long id);
     }
 }
