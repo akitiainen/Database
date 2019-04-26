@@ -8,6 +8,8 @@ namespace BankApp
     {
         static private BankRepository _bankRepository = new BankRepository();
         static private CustomerRepository _customerRepository = new CustomerRepository();
+        static private AccountRepository _accountRepository = new AccountRepository();
+
         static void Main(string[] args)
         {
             
@@ -26,6 +28,11 @@ namespace BankApp
                     case ConsoleKey.D2:
                         Console.Clear();
                         PrintCustomers();
+                        break;
+
+                    case ConsoleKey.D3:
+                        Console.Clear();
+                        PrintAccounts();
                         break;
 
                     case ConsoleKey.Escape:
@@ -63,12 +70,29 @@ namespace BankApp
             }
         }
 
+        static void PrintAccounts()
+        {
+            long id;
+            Console.WriteLine("Anna sen pankin, jonka tilit haluat tulostaa, ID");
+            while (!long.TryParse(Console.ReadLine(), out id))
+            {
+                Console.WriteLine("Yritäpä uusiks ja laita numeroita");
+            }
+
+            var accounts = _accountRepository.ReadAccounts(_bankRepository.Read(id));
+
+            foreach (var a in accounts)
+            {
+                Console.WriteLine(a.Iban);
+            }
+        }
+
         private static ConsoleKeyInfo UserInterface()
         {
             Console.WriteLine("Tietokantaohjelmointitehtävä 1!\n");
             Console.WriteLine("[1] Tulosta pankit");
             Console.WriteLine("[2] Tulosta henkilöt");
-            Console.WriteLine("[3] ");
+            Console.WriteLine("[3] Tuosta kaikki tilit");
             Console.WriteLine("[4] ");
             Console.WriteLine("[5] ");
             Console.WriteLine("[ESC] Lopeta ohjelmansuoritus");
