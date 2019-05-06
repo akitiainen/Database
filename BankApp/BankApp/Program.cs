@@ -1,11 +1,14 @@
 ﻿using System;
 using BankApp.Models;
 using BankApp.Repositories;
+using BankApp.Views;
 
 namespace BankApp
 {
     class Program
     {
+        
+
         static private BankRepository _bankRepository = new BankRepository();
         static private CustomerRepository _customerRepository = new CustomerRepository();
         static private AccountRepository _accountRepository = new AccountRepository();
@@ -13,6 +16,7 @@ namespace BankApp
 
         static void Main(string[] args)
         {
+            UIModel uiModel = new UIModel();
             
             ConsoleKeyInfo cki;
             do
@@ -41,7 +45,13 @@ namespace BankApp
 
                     case ConsoleKey.D4:
                         Console.Clear();
-                        PrintTransactions();
+                        uiModel.CreateBank();
+                        msg = "Paina Enter jatkaaksesi!";
+                        break;
+
+                    case ConsoleKey.D5:
+                        Console.Clear();
+                        uiModel.UpdateBank();
                         msg = "Paina Enter jatkaaksesi!";
                         break;
 
@@ -66,7 +76,13 @@ namespace BankApp
 
             foreach(var b in banks)
             {
-                Console.WriteLine(b.Name);
+                Console.WriteLine("Pankki:  " + b.Name + "  BIC:  " + b.Bic);
+
+                //foreach (var customer in b.Customer)
+                //{
+                //    Console.Write("Asiakkaat:  " + customer.Firstname + " " + customer.Lastname + ", ");
+                //}
+                //Console.WriteLine("\n_______________________\n");
             }
         }
 
@@ -93,10 +109,10 @@ namespace BankApp
 
             foreach (var a in accounts)
             {
-                Console.Write(a.Iban + " ");
+                Console.Write(a.Iban + "  Tapahtumat:  ");
                 foreach (var transaction in a.Transaction)
                 {
-                    Console.Write(transaction.Amount + " ");
+                    Console.Write(transaction.Amount + ", ");
                 }
                 Console.WriteLine();
             }
@@ -118,8 +134,8 @@ namespace BankApp
             Console.WriteLine("[1] Tulosta pankit");
             Console.WriteLine("[2] Tulosta henkilöt");
             Console.WriteLine("[3] Tulosta kaikki tilit");
-            Console.WriteLine("[4] Tulosta kaikki tilitapahtumat");
-            Console.WriteLine("[5] ");
+            Console.WriteLine("[4] Luo uusi pankki");
+            Console.WriteLine("[5] Päivitä pankin tiedot");
             Console.WriteLine("[ESC] Lopeta ohjelmansuoritus");
 
             return Console.ReadKey();

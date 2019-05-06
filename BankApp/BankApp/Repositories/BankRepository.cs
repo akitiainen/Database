@@ -4,6 +4,7 @@ using System.Text;
 using BankApp.Models;
 using BankApp.Repositories;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankApp.Repositories
 {
@@ -42,7 +43,7 @@ namespace BankApp.Repositories
 
         public List<Bank> ReadBanks()
         {
-            var banks = _bankdbContext.Bank.ToList();
+            var banks = _bankdbContext.Bank.Include(c => c.Customer).ToList();
             return banks;
         }
 
