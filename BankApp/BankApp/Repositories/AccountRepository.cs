@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using BankApp.Models;
 using BankApp.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankApp.Repositories
 {
@@ -41,7 +42,7 @@ namespace BankApp.Repositories
 
         public List<Account> ReadAccounts(Bank bank)
         {
-            var accounts = _bankdbContext.Account.Where(b => b.BankId == bank.Id).ToList();
+            var accounts = _bankdbContext.Account.Where(b => b.BankId == bank.Id).Include(t => t.Transaction).ToList();
             return accounts;
         }
     }

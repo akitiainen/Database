@@ -9,6 +9,7 @@ namespace BankApp
         static private BankRepository _bankRepository = new BankRepository();
         static private CustomerRepository _customerRepository = new CustomerRepository();
         static private AccountRepository _accountRepository = new AccountRepository();
+        static private TransactionRepository _trasactionsRepository = new TransactionRepository();
 
         static void Main(string[] args)
         {
@@ -23,16 +24,25 @@ namespace BankApp
                     case ConsoleKey.D1:
                         Console.Clear();
                         PrintBanks();
+                        msg = "Paina Enter jatkaaksesi!";
                         break;
 
                     case ConsoleKey.D2:
                         Console.Clear();
                         PrintCustomers();
+                        msg = "Paina Enter jatkaaksesi!";
                         break;
 
                     case ConsoleKey.D3:
                         Console.Clear();
                         PrintAccounts();
+                        msg = "Paina Enter jatkaaksesi!";
+                        break;
+
+                    case ConsoleKey.D4:
+                        Console.Clear();
+                        PrintTransactions();
+                        msg = "Paina Enter jatkaaksesi!";
                         break;
 
                     case ConsoleKey.Escape:
@@ -83,7 +93,22 @@ namespace BankApp
 
             foreach (var a in accounts)
             {
-                Console.WriteLine(a.Iban);
+                Console.Write(a.Iban + " ");
+                foreach (var transaction in a.Transaction)
+                {
+                    Console.Write(transaction.Amount + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        static void PrintTransactions()
+        {
+            var transactions = _trasactionsRepository.ReadTransactions();
+
+            foreach (var t in transactions)
+            {
+                Console.WriteLine($"IBAN: {t.Iban}  Amount: {t.Amount}");
             }
         }
 
@@ -92,8 +117,8 @@ namespace BankApp
             Console.WriteLine("Tietokantaohjelmointitehtävä 1!\n");
             Console.WriteLine("[1] Tulosta pankit");
             Console.WriteLine("[2] Tulosta henkilöt");
-            Console.WriteLine("[3] Tuosta kaikki tilit");
-            Console.WriteLine("[4] ");
+            Console.WriteLine("[3] Tulosta kaikki tilit");
+            Console.WriteLine("[4] Tulosta kaikki tilitapahtumat");
             Console.WriteLine("[5] ");
             Console.WriteLine("[ESC] Lopeta ohjelmansuoritus");
 
