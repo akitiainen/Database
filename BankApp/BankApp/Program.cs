@@ -16,8 +16,10 @@ namespace BankApp
 
         static void Main(string[] args)
         {
-            UIModel uiModel = new UIModel();
-            
+            UIModelBank bankModel = new UIModelBank();
+            UIModelCustomer customerModel = new UIModelCustomer();
+            UIModelAccount accountModel = new UIModelAccount();
+
             ConsoleKeyInfo cki;
             do
             {
@@ -27,7 +29,7 @@ namespace BankApp
                 {
                     case ConsoleKey.D1:
                         Console.Clear();
-                        PrintBanks();
+                        bankModel.PrintBanks();
                         msg = "Paina Enter jatkaaksesi!";
                         break;
 
@@ -45,13 +47,20 @@ namespace BankApp
 
                     case ConsoleKey.D4:
                         Console.Clear();
-                        uiModel.CreateBank();
+                        bankModel.CreateBank();
                         msg = "Paina Enter jatkaaksesi!";
                         break;
 
                     case ConsoleKey.D5:
                         Console.Clear();
-                        uiModel.UpdateBank();
+                        bankModel.UpdateBank();
+                        msg = "Paina Enter jatkaaksesi!";
+                        break;
+
+                    case ConsoleKey.D6:
+                        Console.Clear();
+                        customerModel.CreateCustomer();
+                        accountModel.CreateAccount();
                         msg = "Paina Enter jatkaaksesi!";
                         break;
 
@@ -70,29 +79,21 @@ namespace BankApp
             } while (cki.Key != ConsoleKey.Escape);
         }
 
-        static void PrintBanks()
-        {
-            var banks = _bankRepository.ReadBanks();
-
-            foreach(var b in banks)
-            {
-                Console.WriteLine("Pankki:  " + b.Name + "  BIC:  " + b.Bic);
-
-                //foreach (var customer in b.Customer)
-                //{
-                //    Console.Write("Asiakkaat:  " + customer.Firstname + " " + customer.Lastname + ", ");
-                //}
-                //Console.WriteLine("\n_______________________\n");
-            }
-        }
+        
 
         static void PrintCustomers()
         {
-            var customers = _customerRepository.ReadCustomers();
+            var customers = _bankRepository.ReadBanks();
 
-            foreach (var c in customers)
+            foreach (var b in customers)
             {
-                Console.WriteLine(c.Firstname + " " + c.Lastname);
+                Console.WriteLine("Pankki:  " + b.Name + "  BIC:  " + b.Bic);
+                Console.Write("Asiakkaat:  ");
+                foreach (var customer in b.Customer)
+                {
+                    Console.Write(customer.Firstname + " " + customer.Lastname + ", ");
+                }
+                Console.WriteLine("\n_______________________\n");
             }
         }
 
@@ -107,14 +108,18 @@ namespace BankApp
 
             var accounts = _accountRepository.ReadAccounts(_bankRepository.Read(id));
 
+            int i = 0;
             foreach (var a in accounts)
             {
-                Console.Write(a.Iban + "  Tapahtumat:  ");
+                Console.WriteLine(a.Iban);
+                Console.WriteLine("Saldo:  " + a.Balance);
+                Console.Write("Tapahtumat:  ");
                 foreach (var transaction in a.Transaction)
                 {
+                    i++;
                     Console.Write(transaction.Amount + ", ");
                 }
-                Console.WriteLine();
+                Console.WriteLine("\n________________________\n");
             }
         }
 
@@ -136,6 +141,7 @@ namespace BankApp
             Console.WriteLine("[3] Tulosta kaikki tilit");
             Console.WriteLine("[4] Luo uusi pankki");
             Console.WriteLine("[5] Päivitä pankin tiedot");
+            Console.WriteLine("[6] Lisää asiakas ja hänelle tili");
             Console.WriteLine("[ESC] Lopeta ohjelmansuoritus");
 
             return Console.ReadKey();

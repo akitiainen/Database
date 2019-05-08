@@ -6,11 +6,11 @@ using BankApp.Repositories;
 
 namespace BankApp.Views
 {
-    class UIModel
+    class UIModelBank
     {
         private static readonly BankRepository _bankRepository = new BankRepository();
-        private static readonly CustomerRepository _customerRepository = new CustomerRepository();
-        private static readonly AccountRepository _accountRepository = new AccountRepository();
+        
+        
         private static readonly TransactionRepository _trasactionsRepository = new TransactionRepository();
 
         public void CreateBank()
@@ -38,9 +38,19 @@ namespace BankApp.Views
                 Console.WriteLine("Väärä syöte, kirjoita numero!");
             }
             Bank updateBank = _bankRepository.Read(id);
-            updateBank.Name = "Nordea";
-            updateBank.Bic = "NDEAFIHH";
+            updateBank.Name = "S-Pankki";
+            updateBank.Bic = "SBANFIHH";
             _bankRepository.UpdateBank(id, updateBank);
+        }
+
+        public void PrintBanks()
+        {
+            var banks = _bankRepository.ReadBanks();
+
+            foreach (var b in banks)
+            {
+                Console.WriteLine("Pankki:  " + b.Name + "  BIC:  " + b.Bic);
+            }
         }
     }
 }
