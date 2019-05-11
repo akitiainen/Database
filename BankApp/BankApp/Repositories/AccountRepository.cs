@@ -40,9 +40,9 @@ namespace BankApp.Repositories
             return account;
         }
 
-        public List<Account> ReadAccounts(Bank bank)
+        public List<Account> ReadAccounts(Customer customer)
         {
-            var accounts = _bankdbContext.Account.Where(b => b.BankId == bank.Id).Include(t => t.Transaction).ToList();
+            var accounts = _bankdbContext.Account.Where(c => c.CustomerId == customer.Id).Include(t => t.Transaction).ToList();
             return accounts;
         }
     }

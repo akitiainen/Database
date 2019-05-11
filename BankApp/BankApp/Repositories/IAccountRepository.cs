@@ -8,7 +8,7 @@ namespace BankApp.Repositories
     public interface IAccountRepository
     {
         void CreateAccount(Account account);
-        List<Account> ReadAccounts(Bank bank);
+        List<Account> ReadAccounts(Customer customer);
         Account Read(string iban);
         void DeleteAccount(string iban);
     }

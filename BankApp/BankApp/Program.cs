@@ -7,7 +7,6 @@ namespace BankApp
 {
     class Program
     {
-        
 
         static private BankRepository _bankRepository = new BankRepository();
         static private CustomerRepository _customerRepository = new CustomerRepository();
@@ -16,6 +15,8 @@ namespace BankApp
 
         static void Main(string[] args)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+
             UIModelBank bankModel = new UIModelBank();
             UIModelCustomer customerModel = new UIModelCustomer();
             UIModelAccount accountModel = new UIModelAccount();
@@ -35,32 +36,50 @@ namespace BankApp
 
                     case ConsoleKey.D2:
                         Console.Clear();
-                        PrintCustomers();
+                        bankModel.CreateBank();
                         msg = "Paina Enter jatkaaksesi!";
                         break;
 
                     case ConsoleKey.D3:
                         Console.Clear();
-                        PrintAccounts();
+                        bankModel.UpdateBank();
                         msg = "Paina Enter jatkaaksesi!";
                         break;
 
                     case ConsoleKey.D4:
                         Console.Clear();
-                        bankModel.CreateBank();
+                        customerModel.PrintCustomers();
                         msg = "Paina Enter jatkaaksesi!";
                         break;
 
                     case ConsoleKey.D5:
                         Console.Clear();
-                        bankModel.UpdateBank();
+                        customerModel.CreateCustomer();
+                        accountModel.CreateAccount();
                         msg = "Paina Enter jatkaaksesi!";
                         break;
 
                     case ConsoleKey.D6:
                         Console.Clear();
-                        customerModel.CreateCustomer();
-                        accountModel.CreateAccount();
+                        customerModel.UpdateCustomer();
+                        msg = "Paina Enter jatkaaksesi!";
+                        break;
+
+                    case ConsoleKey.D7:
+                        Console.Clear();
+                        accountModel.PrintAccounts();
+                        msg = "Paina Enter jatkaaksesi!";
+                        break;
+
+                    case ConsoleKey.D8:
+                        Console.Clear();
+                        accountModel.DeleteAccount();
+                        msg = "Paina Enter jatkaaksesi!";
+                        break;
+
+                    case ConsoleKey.D9:
+                        Console.Clear();
+                        accountModel.CreateTransaction();
                         msg = "Paina Enter jatkaaksesi!";
                         break;
 
@@ -79,50 +98,6 @@ namespace BankApp
             } while (cki.Key != ConsoleKey.Escape);
         }
 
-        
-
-        static void PrintCustomers()
-        {
-            var customers = _bankRepository.ReadBanks();
-
-            foreach (var b in customers)
-            {
-                Console.WriteLine("Pankki:  " + b.Name + "  BIC:  " + b.Bic);
-                Console.Write("Asiakkaat:  ");
-                foreach (var customer in b.Customer)
-                {
-                    Console.Write(customer.Firstname + " " + customer.Lastname + ", ");
-                }
-                Console.WriteLine("\n_______________________\n");
-            }
-        }
-
-        static void PrintAccounts()
-        {
-            long id;
-            Console.WriteLine("Anna sen pankin, jonka tilit haluat tulostaa, ID");
-            while (!long.TryParse(Console.ReadLine(), out id))
-            {
-                Console.WriteLine("Yritäpä uusiks ja laita numeroita");
-            }
-
-            var accounts = _accountRepository.ReadAccounts(_bankRepository.Read(id));
-
-            int i = 0;
-            foreach (var a in accounts)
-            {
-                Console.WriteLine(a.Iban);
-                Console.WriteLine("Saldo:  " + a.Balance);
-                Console.Write("Tapahtumat:  ");
-                foreach (var transaction in a.Transaction)
-                {
-                    i++;
-                    Console.Write(transaction.Amount + ", ");
-                }
-                Console.WriteLine("\n________________________\n");
-            }
-        }
-
         static void PrintTransactions()
         {
             var transactions = _trasactionsRepository.ReadTransactions();
@@ -136,12 +111,18 @@ namespace BankApp
         private static ConsoleKeyInfo UserInterface()
         {
             Console.WriteLine("Tietokantaohjelmointitehtävä 1!\n");
+            Console.WriteLine("Pankkien toiminnot");
             Console.WriteLine("[1] Tulosta pankit");
-            Console.WriteLine("[2] Tulosta henkilöt");
-            Console.WriteLine("[3] Tulosta kaikki tilit");
-            Console.WriteLine("[4] Luo uusi pankki");
-            Console.WriteLine("[5] Päivitä pankin tiedot");
-            Console.WriteLine("[6] Lisää asiakas ja hänelle tili");
+            Console.WriteLine("[2] Luo uusi pankki");
+            Console.WriteLine("[3] Päivitä pankin tiedot");
+            Console.WriteLine("Asiakkaiden toiminnot");
+            Console.WriteLine("[4] Tulosta asiakkaat");
+            Console.WriteLine("[5] Lisää asiakas ja hänelle tili");
+            Console.WriteLine("[6] Päivitä asiakkaan tiedot");
+            Console.WriteLine("Tilien tominnot");
+            Console.WriteLine("[7] Tulosta asiakkaan tilit ja tapahtumat");
+            Console.WriteLine("[8] Poista asiakkaan tili");
+            Console.WriteLine("[9] Lisää tapahtuma tilille");
             Console.WriteLine("[ESC] Lopeta ohjelmansuoritus");
 
             return Console.ReadKey();

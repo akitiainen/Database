@@ -2,6 +2,7 @@
 using BankApp.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BankApp.Views
@@ -9,6 +10,7 @@ namespace BankApp.Views
     class UIModelCustomer
     {
         private static readonly CustomerRepository _customerRepository = new CustomerRepository();
+        private static readonly BankRepository _bankRepository = new BankRepository();
 
         public void CreateCustomer()
         {
@@ -20,6 +22,37 @@ namespace BankApp.Views
             };
 
             _customerRepository.CreateCustomer(customer);
+        }
+
+        public void UpdateCustomer()
+        {
+            var customer = _customerRepository.Read(8);
+            customer.Firstname = "Mato";
+            customer.Lastname = "Matala";
+
+            _customerRepository.UpdateCustomer(8, customer);
+        }
+
+        public void DeleteCustomer()
+        {
+            var customer = _customerRepository.ReadCustomers().FirstOrDefault(name => name.Firstname == "Katto");
+            _customerRepository.DeleteCustomer(customer.Id);
+        }
+
+        public void PrintCustomers()
+        {
+            var customers = _bankRepository.ReadBanks();
+
+            foreach (var b in customers)
+            {
+                Console.WriteLine("Pankki:  " + b.Name + "  BIC:  " + b.Bic);
+                Console.Write("Asiakkaat:  ");
+                foreach (var customer in b.Customer)
+                {
+                    Console.Write(customer.Firstname + " " + customer.Lastname + ", ");
+                }
+                Console.WriteLine("\n_______________________\n");
+            }
         }
     }
 }
