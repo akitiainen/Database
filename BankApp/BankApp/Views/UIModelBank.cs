@@ -49,7 +49,7 @@ namespace BankApp.Views
 
             foreach (var b in banks)
             {
-                Console.WriteLine("Pankki:  " + b.Name + "  BIC:  " + b.Bic);
+                Console.WriteLine("Pankki:  " + b.Name.PadRight(15) + "  BIC:  " + b.Bic);
             }
         }
     }

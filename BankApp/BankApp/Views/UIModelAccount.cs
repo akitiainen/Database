@@ -31,12 +31,26 @@ namespace BankApp.Views
         
         public void DeleteAccount()
         {
-            _accountRepository.DeleteAccount("FI5912341234123412");
+            _accountRepository.DeleteAccount("FI3942004500100010");
         }
 
         public void PrintAccounts()
         {
-            var accounts = _accountRepository.ReadAccounts(customer);
+            Customer isCustomer;
+            while (true)
+            {
+                isCustomer = _customerRepository.Read(Program.UserInput());
+                if (isCustomer == null)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Henkilöä ei löydy!");
+                }
+                else
+                    break;
+            }
+
+            Console.WriteLine("Customer:  " + isCustomer.Firstname + " " + isCustomer.Lastname);
+            var accounts = _accountRepository.ReadAccounts(isCustomer);
             foreach (var a in accounts)
             {
                 Console.WriteLine("Iban:  " + a.Iban);
@@ -54,8 +68,8 @@ namespace BankApp.Views
         {
             Transaction transaction = new Transaction()
             {
-                Amount = 35.25M,
-                Iban = "FI5912341234123412"
+                Amount = 666,
+                Iban = "FI3942004500100011"
             };
 
             _transactionRepository.CreateTransaction(transaction);

@@ -43,7 +43,7 @@ namespace BankApp.Repositories
 
         public List<Bank> ReadBanks()
         {
-            var banks = _bankdbContext.Bank.Include(c => c.Customer).ToList();
+            var banks = _bankdbContext.Bank.Include(b => b.Customer).ToList();
             return banks;
         }
 
