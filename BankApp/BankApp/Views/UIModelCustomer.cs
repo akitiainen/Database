@@ -18,7 +18,7 @@ namespace BankApp.Views
             {
                 Firstname = "Katto",
                 Lastname = "Kassinen",
-                BankId = 3
+                BankId = 4
             };
 
             _customerRepository.CreateCustomer(customer);
@@ -26,11 +26,11 @@ namespace BankApp.Views
 
         public void UpdateCustomer()
         {
-            var customer = _customerRepository.Read(8);
-            customer.Firstname = "Mato";
-            customer.Lastname = "Matala";
+            var customer = _customerRepository.ReadCustomers().FirstOrDefault(name => name.Firstname == "Katto");
+            customer.Firstname = "Katto";
+            customer.Lastname = "Katala";
 
-            _customerRepository.UpdateCustomer(8, customer);
+            _customerRepository.UpdateCustomer(customer.Id, customer);
         }
 
         public void DeleteCustomer()

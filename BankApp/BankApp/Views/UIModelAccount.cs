@@ -20,10 +20,10 @@ namespace BankApp.Views
         {
             Account account = new Account()
             {
-                Iban = "FI5912341234123412",
-                BankId = 3,
+                Iban = "FI5910002000300090",
+                BankId = 4,
                 CustomerId = customer.Id,
-                Balance = 12000
+                Balance = 2000
             };
 
             _accountRepository.CreateAccount(account);
@@ -31,7 +31,7 @@ namespace BankApp.Views
         
         public void DeleteAccount()
         {
-            _accountRepository.DeleteAccount("FI3942004500100010");
+            _accountRepository.DeleteAccount("FI5912341234123412");
         }
 
         public void PrintAccounts()
@@ -69,7 +69,7 @@ namespace BankApp.Views
             Transaction transaction = new Transaction()
             {
                 Amount = 666,
-                Iban = "FI3942004500100011"
+                Iban = "FI5910002000300090"
             };
 
             _transactionRepository.CreateTransaction(transaction);

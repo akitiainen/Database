@@ -38,8 +38,8 @@ namespace BankApp.Views
                 Console.WriteLine("Väärä syöte, kirjoita numero!");
             }
             Bank updateBank = _bankRepository.Read(id);
-            updateBank.Name = "S-Pankki";
-            updateBank.Bic = "SBANFIHH";
+            updateBank.Name = "OmaSP";
+            updateBank.Bic = "ITELFIHH";
             _bankRepository.UpdateBank(id, updateBank);
         }
 
