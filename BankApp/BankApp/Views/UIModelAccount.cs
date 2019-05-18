@@ -69,7 +69,8 @@ namespace BankApp.Views
             Transaction transaction = new Transaction()
             {
                 Amount = 666,
-                Iban = "FI5910002000300090"
+                Iban = "FI3942004500100011",
+                TimeStamp = DateTime.Now
             };
 
             _transactionRepository.CreateTransaction(transaction);
